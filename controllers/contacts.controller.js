@@ -1,16 +1,16 @@
 import Contact from "../models/contact.model.js";
 import nodemailer from "nodemailer";
-// import {env} from '../config.js'
+import {env} from '../config.js'
 
 // nodemail
 
 const transport = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
+  host: env.mailHost,
+  port: env.mailPort,
   secure: false,
   auth: {
-    user: "biomir.vet@gmail.com",
-    pass: "fhcxwakwkduyhacj",
+    user: env.mailUser,
+    pass: env.mailPassword,
   },
 });
 
@@ -19,10 +19,10 @@ export const addContact = async (req, res) => {
     const contact = await Contact.create(req.body);
 
     await transport.sendMail({
-      from: "biomir.vet@gmail.com", // sender address
-      to: "mdemko2012@gmail.com", // list of receivers
-      subject: "Nouvelle prise de contact via le site", // Subject line
-      text: "Hello world?", // plain text body
+      from: env.mailUser, 
+      to: "mdemko2012@gmail.com",
+      subject: "Nouvelle prise de contact via le site",
+      text: "Hello world?", 
       html: `
                 <ul>
                     <li>Nom : ${contact.name}</li>
@@ -69,17 +69,18 @@ export const getByIdContact = async (req, res) => {
 // deleteById
 
 export const deleteByIdContact = async (req, res) => {
-  try {
-    const getContact = await Contact.findById(req.params.id);
-    if (getContact.user.toString() === req.user.id) {
-      const contact = await Contact.findByIdAndDelete(req.params.id);
-      res.status(200).json("Contact deleted ! ");
-    } else {
-      return res
-        .status(403)
-        .json({ error: "Seul le créateur peut supprimer !" });
+    try {
+        const getContact = await Contact.findById(req.params.id);
+        if (!getContact) {
+            return res.status(404).json({ error: "Contact not found" });
+        }
+        if (parseInt(getContact.id) == parseInt(req.user.id)) {
+            const contact = await Contact.findByIdAndDelete(req.params.id);
+            res.status(200).json("Contact deleted ! ");
+        } else {
+            return res.status(403).json({ error: "Seul le créateur peut supprimer !" });
+        }
+    } catch (err) {
+        res.status(500).json(err.message);
     }
-  } catch (err) {
-    res.status(500).json({ error: "Error lors de la récupération" });
-  }
 };

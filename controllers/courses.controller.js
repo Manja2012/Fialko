@@ -51,13 +51,10 @@ export const updateByIdCourse = async (req, res) => {
 export const deleteByIdCourse = async (req, res) => {
     try {
         const getCourse = await Course.findById(req.params.id);
-        
         if (!getCourse) {
             return res.status(404).json({ error: "Course not found" });
         }
-
         if (parseInt(getCourse.id) == parseInt(req.user.id)) {
-                
             const course = await Course.findByIdAndDelete(req.params.id);
             res.status(200).json("Course deleted ! ");
         } else {
