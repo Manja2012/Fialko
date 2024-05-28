@@ -25,7 +25,9 @@ mongoose
 // MIDDLEWARE
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors())
+app.use(cors({
+  origin: '*'
+}))
 
 // MIDDLEWARE TO ROUTE
 app.use("/api/contact", routerContact)

@@ -33,6 +33,7 @@ const login = async (req, res) => {
 
 const register = async (req, res, next) => {
     try {
+        console.log(req.body.password)
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         await User.create({
