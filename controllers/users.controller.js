@@ -94,11 +94,22 @@ const deleteByIdUser = async (req, res) => {
     }
 }
 
+const getCurrenctUser = async (req, res) => {
+    try {
+        const id = req.user.id;
+        const user = await User.findById(id);
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export {
     login,
     register,
     getAllUsers,
     getByIdUser,
     updateByIdUser,
-    deleteByIdUser
+    deleteByIdUser,
+    getCurrenctUser
 }

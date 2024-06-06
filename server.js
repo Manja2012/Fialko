@@ -26,7 +26,8 @@ mongoose
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: '*'
+  credentials: true,
+  origin: 'http://localhost:5174'
 }))
 
 // MIDDLEWARE TO ROUTE

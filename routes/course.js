@@ -15,7 +15,6 @@ const router = express.Router();
 router.post("/add", addCourse);
 router.get('/', getAllCourses);
 router.get('/:id', getByIdCourse);
-router.get('/:id', getByIdCourse);
 router.put('/:id', verifieToken, updateByIdCourse);
 router.delete('/:id', verifieToken, deleteByIdCourse);
 router.get('/:id/review', getReview)

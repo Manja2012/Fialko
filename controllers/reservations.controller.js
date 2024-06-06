@@ -15,6 +15,7 @@ const transport = nodemailer.createTransport({
   
   export const addReservation = async (req, res) => {
     try {
+        console.log(req.body)
       const reservation = await Reservation.create(req.body);
   
       await transport.sendMail({
