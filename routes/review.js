@@ -11,7 +11,7 @@ deleteByIdReview
 
 const router = express.Router();
 
-router.post("/add", addReview);
+router.post("/add/:idcourse", verifieToken, addReview);
 router.get('/', getAllReviews);
 router.get('/:id', getByIdReview);
 router.put('/:id', verifieToken, updateByIdReview);

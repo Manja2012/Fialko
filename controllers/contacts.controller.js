@@ -16,6 +16,7 @@ const transport = nodemailer.createTransport({
 
 export const addContact = async (req, res) => {
   try {
+    console.log(req.body)
     const contact = await Contact.create(req.body);
 
     await transport.sendMail({

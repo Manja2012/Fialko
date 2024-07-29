@@ -38,7 +38,8 @@ const register = async (req, res, next) => {
 
         await User.create({
             ...req.body,
-            password: hashedPassword
+            password: hashedPassword,
+            isAdmin: false
         });
         res.status(201).json("User has been created!");
     } catch (error) {

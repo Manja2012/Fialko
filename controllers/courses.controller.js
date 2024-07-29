@@ -2,8 +2,12 @@ import Course from '../models/course.model.js';
 
 export const addCourse = async (req, res) => {
     try {
-        console.log(req.body);
-        const course = await Course.create(req.body)
+        console.log(req.file);
+
+        const course = await Course.create({
+             ...req.body,
+            picture: req.file.filename
+        })
         res.status(201).json(course)
     } catch (err) {
         res.status(500).json({ error: "Error lors de la création !" })
@@ -15,6 +19,7 @@ export const getAllCourses = async (req, res) => {
         const courses = await Course.find().populate('review')
         res.status(200).json(courses)
     } catch (err) {
+        console.log(err)
         res.status(500).json({ error: "Error lors de la récupération" })
     }
 }
