@@ -10,6 +10,7 @@ import routerUser from './routes/user.js';
 import routerCourse from './routes/course.js';
 import routerReview from './routes/review.js';
 import routerReservation from './routes/reservation.js';
+import routeStripe from './routes/stripe.js'
 
 const app = express()
 
@@ -37,6 +38,7 @@ app.use("/api/user", routerUser)
 app.use("/api/course", routerCourse)
 app.use("/api/review", routerReview)
 app.use("/api/reservation", routerReservation)
+app.use("/api/stripe", routeStripe);
 
 // LISTEN
 app.listen(PORT, () => {

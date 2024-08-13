@@ -10,4 +10,6 @@ export const env = {
   mailUser: process.env.MAIL_USER,
   mailHost: process.env.MAIL_HOST,
   mailPort: process.env.MAIL_PORT,
-}
+  keyStripe: process.env.KEY_STRIPE,
+  webAppUrl: process.env.WEB_APP_URL,
+};
