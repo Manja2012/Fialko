@@ -1,6 +1,21 @@
 import mongoose from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 
+const courseBasketDataSchema = mongoose.Schema({
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
+  courseName: {
+    type: String,
+  },
+  unitPrice: {
+    type: Number,
+  },
+  quantity: {
+    type: Number,
+  }
+})
+
 const orderSchema = mongoose.Schema(
   {
     user: {
@@ -8,22 +23,21 @@ const orderSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-    course: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
-      required: true,
-    },
     order_date: {
       type: Date,
       default: Date.now,
     },
+    basket: {
+      type: [courseBasketDataSchema],
+      default: undefined,
+    },
     stripe_session: {
       id: {
-        type: String, 
+        type: String,
         required: true,
       },
       payment_status: {
-        type: String, 
+        type: String,
         required: true,
       },
       created_at: {
@@ -31,7 +45,7 @@ const orderSchema = mongoose.Schema(
         default: Date.now,
       },
       customer_email: {
-        type: String, 
+        type: String,
         required: true,
       },
     },

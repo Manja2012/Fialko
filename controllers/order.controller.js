@@ -1,19 +1,41 @@
 import Order from "../models/order.model.js";
 import stripe from "../services/stripe.js";
 
+// export const addOrder = async (req, res) => {
+//   try {
+//     const user = req.user.id;
+//     const course = req.body.courseId;
+
+//     const order = await Order.create({
+//       ...req.body,
+//       user,
+//       course,
+//     });
+//     res.status(201).json(order);
+//   } catch (err) {
+//     res.status(500).json({ error: "Error lors de la création !" });
+//   }
+// };
 export const addOrder = async (req, res) => {
   try {
     const user = req.user.id;
-    const course = req.body.courseId;
+
+    if (!user) {
+      return res.status(400).json({ error: "User is not authenticated" });
+    }
 
     const order = await Order.create({
       ...req.body,
       user,
-      course,
     });
+
     res.status(201).json(order);
   } catch (err) {
-    res.status(500).json({ error: "Error lors de la création !" });
+    console.error(err);
+    res.status(500).json({
+      error: "Error lors de la création de la commande",
+      details: err.message,
+    });
   }
 };
 
@@ -49,7 +71,7 @@ export const validatePayment = async (req, res) => {
       return;
     }
 
-    throw new Error("Le paiment n’a pas pu etre effectué");
+    throw new Error("Le paiement n’a pas pu etre effectué");
   } catch (error) {
     console.error(error);
     res.status(500).json({
