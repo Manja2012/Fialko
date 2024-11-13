@@ -3,24 +3,48 @@ import Course from "../models/course.model.js";
 import Reservation from "../models/reservation.model.js";
 
 //new
+// export const addReview = async (req, res) => {
+//   const userId = req.user.id;
+//   const courseId = req.params.idcourse;
+//   const { comment, rating } = req.body;
+
+//   try {
+//     const reservation = await Reservation.findOne({
+//       user: userId,
+//       course: courseId,
+//     });
+//     if (!reservation) {
+//       return res
+//         .status(403)
+//         .json({ message: "User has not reserved this course" });
+//     }
+
+//     console.log("marianna ", courseId);
+//     //   await review.save();
+//     const review = await Review.create({
+//       user: userId,
+//       course: courseId,
+//       comment: comment,
+//       rating: rating,
+//     });
+//     await Course.findByIdAndUpdate(
+//       courseId,
+//       { $push: { review: review._id } },
+//       { new: true }
+//     );
+//     console.log("lancement save termine");
+//     res.status(201).json(review);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const addReview = async (req, res) => {
   const userId = req.user.id;
   const courseId = req.params.idcourse;
   const { comment, rating } = req.body;
 
   try {
-    const reservation = await Reservation.findOne({
-      user: userId,
-      course: courseId,
-    });
-    if (!reservation) {
-      return res
-        .status(403)
-        .json({ message: "User has not reserved this course" });
-    }
-
-    console.log("marianna ", courseId);
-    //   await review.save();
     const review = await Review.create({
       user: userId,
       course: courseId,
@@ -39,9 +63,8 @@ export const addReview = async (req, res) => {
   }
 };
 
-
 export const getAllReviewsByOneCourse = async (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
   const { courseId } = req.params;
   try {
     const course = await Course.findById(courseId).populate("review");
@@ -70,18 +93,23 @@ export const getByIdReview = async (req, res) => {
   }
 };
 
+
 export const updateByIdReview = async (req, res) => {
   try {
-    const getReview = await Review.findById(req.params.id);
+    const review = await Review.findById(req.params.id);
 
-    if (!getReview) {
+    if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
-    if (parseInt(getReview.id) == parseInt(req.user.id)) {
-      const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
-      return res.status(200).json(review);
+    if (req.user.isAdmin) {
+      const updateReview = await Review.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+        }
+      );
+      return res.status(200).json(updateReview);
     } else {
       return res
         .status(403)
@@ -94,14 +122,14 @@ export const updateByIdReview = async (req, res) => {
 
 export const deleteByIdReview = async (req, res) => {
   try {
-    const getReview = await Review.findById(req.params.id);
+    const review = await Review.findById(req.params.id);
 
-    if (!getReview) {
+    if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
 
-    if (parseInt(getReview.id) == parseInt(req.user.id)) {
-      const review = await Review.findByIdAndDelete(req.params.id);
+    if (req.user.isAdmin) {
+      const deleteReview = await Review.findByIdAndDelete(req.params.id);
       res.status(200).json("Review deleted ! ");
     } else {
       return res

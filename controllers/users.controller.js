@@ -15,7 +15,7 @@ const login = async (req, res) => {
         if (!comparePassword) return res.status(400).json("Wrong Credentials ! ");
 
         const token = jwt.sign(
-            { id: user._id },
+            { id: user._id, isAdmin: user.isAdmin },
             env.token,
             { expiresIn: "24h" }
         );

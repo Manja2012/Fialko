@@ -36,45 +36,47 @@ export const getByIdCourse = async (req, res) => {
 
 export const updateByIdCourse = async (req, res) => {
   try {
-    const getCourse = await Course.findById(req.params.id);
+    const course = await Course.findById(req.params.id);
 
-    if (!getCourse) {
+    if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    // if (parseInt(getCourse.userId) == parseInt(req.user.id)) {
-      const course = await Course.findByIdAndUpdate(
-        req.params.id,
-        { ...req.body, picture: req.file.filename },
-        {
-          new: true,
-        }
-      );
-    return res.status(200).json(course);
-    // } else {
-    //   return res
-    // .status(403)
-    // .json({ error: "Seul le créateur peut modifier !" });
-    // }
+
+    console.log("req.file", req.file);
+    console.log("req.picture", req.picture);
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, picture: req.file.filename },
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json(updatedCourse);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Error lors de la récupération" });
   }
 };
 
 export const deleteByIdCourse = async (req, res) => {
   try {
-    const getCourse = await Course.findById(req.params.id);
-    if (!getCourse) {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    if (parseInt(getCourse.id) == parseInt(req.user.id)) {
-      const course = await Course.findByIdAndDelete(req.params.id);
-      res.status(200).json("Course deleted ! ");
+
+    console.log(course);
+
+    if (req.user.isAdmin) {
+      const deletedCourse = await Course.findByIdAndDelete(req.params.id);
+      res.status(200).json("Course deleted !");
     } else {
       return res
         .status(403)
         .json({ error: "Seul le créateur peut supprimer !" });
     }
   } catch (err) {
+    console.error(err);
     res.status(500).json(err.message);
   }
 };

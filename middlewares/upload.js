@@ -11,9 +11,11 @@ const storage = multer.diskStorage({
     callback(null, "public/temp/");
   },
   filename: (req, file, callback) => {
-    const name = file.originalname.split(" ").join("_");
-    const extension = MIME_TYPES[file.mimetype];
-    callback(null, name + Date.now() + "." + extension);
+    const name = file.originalname
+      .replaceAll(" ", "_")
+      .replace(/(.+)(\.[a-zA-Z0-9]+)$/, `$1-${Date.now()}$2`);
+    console.log(file.mimetype);
+    callback(null, name);
   },
 });
 
