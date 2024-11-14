@@ -7,6 +7,7 @@ export const verifieToken = (req, res, next) => {
   console.log(req.cookies);
 
   if (!token) return next(createError(401, "Acces Denied"));
+
   jwt.verify(token, env.token, (err, user) => {
     if (err) {
       return next(

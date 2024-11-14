@@ -1,5 +1,5 @@
 import express from "express";
-import { verifieToken } from "../auth/auth.controller.js";
+import { verifieToken, verifyAdminToken } from "../auth/auth.controller.js";
 
 import {
   addCourse,
@@ -15,8 +15,8 @@ const router = express.Router();
 router.post("/add", upload, addCourse);
 router.get("/", getAllCourses);
 router.get("/:id", getByIdCourse);
-router.put("/:id", verifieToken, upload, updateByIdCourse);
-router.delete("/:id", verifieToken, deleteByIdCourse);
+router.put("/:id", verifyAdminToken, upload, updateByIdCourse);
+router.delete("/:id", verifyAdminToken, deleteByIdCourse);
 router.get("/:id/review", getReview);
 
 export default router;
