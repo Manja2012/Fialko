@@ -11,7 +11,6 @@ import routerCourse from "./routes/course.js";
 import routerReview from "./routes/review.js";
 import routeStripe from "./routes/stripe.js";
 
-
 const app = express();
 
 // PORT
@@ -22,8 +21,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
+    optionsSuccessStatus: 200,
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: env.clientOrigin,
   })
 );
 app.use(express.static("public"));
@@ -34,7 +34,6 @@ app.use("/api/user", routerUser);
 app.use("/api/course", routerCourse);
 app.use("/api/review", routerReview);
 app.use("/api/stripe", routeStripe);
-
 
 // DATABASE MONGOOSE
 mongoose
