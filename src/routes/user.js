@@ -7,9 +7,9 @@ import {
   getByIdUser,
   updateByIdUser,
   deleteByIdUser,
-  getCurrenctUser
+  getCurrenctUser,
 } from "../controllers/users.controller.js";
-import { verifieToken } from '../auth/auth.controller.js';
+import { verifieToken } from "../auth/auth.controller.js";
 
 const router = express.Router();
 
@@ -19,6 +19,6 @@ router.get("/", getAllUsers);
 router.get("/:id", getByIdUser);
 router.put("/update/:id", updateByIdUser);
 router.delete("/delete/:id", deleteByIdUser);
-router.get('/current/get', verifieToken, getCurrenctUser)
+router.get("/current/get", verifieToken, getCurrenctUser);
 
 export default router;

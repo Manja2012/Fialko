@@ -1,6 +1,6 @@
 import Review from "../models/review.model.js";
 import Course from "../models/course.model.js";
-import Reservation from "../models/reservation.model.js";
+
 
 //new
 // export const addReview = async (req, res) => {
