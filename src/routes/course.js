@@ -12,7 +12,7 @@ import {
 import upload from "../middlewares/upload.js";
 const router = express.Router();
 
-router.post("/add", upload, addCourse);
+router.post("/", upload, addCourse);
 router.get("/", getAllCourses);
 router.get("/:id", getByIdCourse);
 router.put("/:id", verifyAdminToken, upload, updateByIdCourse);
