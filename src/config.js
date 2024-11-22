@@ -13,4 +13,5 @@ export const env = {
   mailPort: process.env.MAIL_PORT,
   keyStripe: process.env.KEY_STRIPE,
   webAppUrl: process.env.WEB_APP_URL,
+  server: process.env.SERVER,
 };

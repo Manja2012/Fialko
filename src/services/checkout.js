@@ -9,6 +9,7 @@ const createCheckOutSession = async (req, res) => {
     return res.status(400).json({ error: "parmetres requis" });
   }
   try {
+    console.log(`${domainURL}/success?session_id={CHECKOUT_SESSION_ID}`);
     const session = await stripeAPI.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",

@@ -2,8 +2,6 @@ import Contact from "../models/contact.model.js";
 import nodemailer from "nodemailer";
 import {env} from '../config.js'
 
-// nodemail
-
 const transport = nodemailer.createTransport({
   host: env.mailHost,
   port: env.mailPort,
