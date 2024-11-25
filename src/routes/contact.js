@@ -1,5 +1,5 @@
 import express from "express";
-import { verifieToken } from "../auth/auth.controller.js";
+import { verifieToken } from "../middlewares/auth.middleware.js";
 
 import {
   addContact,

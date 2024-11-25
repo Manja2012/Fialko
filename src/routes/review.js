@@ -1,5 +1,8 @@
 import express from "express";
-import { verifieToken, verifyAdminToken } from "../auth/auth.controller.js";
+import {
+  verifieToken,
+  verifyAdminToken,
+} from "../middlewares/auth.middleware.js";;
 
 import {
   addReview,
