@@ -34,18 +34,15 @@ export const requestPasswordReset = async (req, res) => {
   }
 };
 
-// Функция для сброса пароля
 export const resetPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
 
-    // Верификация токена
-    const decoded = jwt.verify(token, env.token);
+       const decoded = jwt.verify(token, env.token);
     const user = await User.findById(decoded.id);
     if (!user) return res.status(404).json("User not found!");
 
-    // Хеширование нового пароля
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     await user.save();
 
