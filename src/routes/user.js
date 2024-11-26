@@ -13,7 +13,7 @@ import {
   deleteByIdUser,
   getCurrenctUser,
 } from "../controllers/users.controller.js";
-import { verifieToken } from "../middlewares/auth.middleware.js";;
+
 
 const router = express.Router();
 
