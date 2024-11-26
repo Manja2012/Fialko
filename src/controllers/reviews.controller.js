@@ -1,44 +1,6 @@
 import Review from "../models/review.model.js";
 import Course from "../models/course.model.js";
 
-
-//new
-// export const addReview = async (req, res) => {
-//   const userId = req.user.id;
-//   const courseId = req.params.idcourse;
-//   const { comment, rating } = req.body;
-
-//   try {
-//     const reservation = await Reservation.findOne({
-//       user: userId,
-//       course: courseId,
-//     });
-//     if (!reservation) {
-//       return res
-//         .status(403)
-//         .json({ message: "User has not reserved this course" });
-//     }
-
-//     console.log("marianna ", courseId);
-//     //   await review.save();
-//     const review = await Review.create({
-//       user: userId,
-//       course: courseId,
-//       comment: comment,
-//       rating: rating,
-//     });
-//     await Course.findByIdAndUpdate(
-//       courseId,
-//       { $push: { review: review._id } },
-//       { new: true }
-//     );
-//     console.log("lancement save termine");
-//     res.status(201).json(review);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 export const addReview = async (req, res) => {
   const userId = req.user.id;
   const courseId = req.params.idcourse;
