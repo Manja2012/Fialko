@@ -16,7 +16,7 @@ import {
 const router = express.Router();
 
 router.post("/add/:idcourse", verifieToken, addReview);
-router.get("/course/:courseId", verifieToken, getAllReviewsByOneCourse);
+router.get("/course/:courseId", getAllReviewsByOneCourse);
 router.get("/", getAllReviews);
 router.get("/:id", getByIdReview);
 router.put("/:id", verifyAdminToken, updateByIdReview);
