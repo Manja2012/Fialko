@@ -102,7 +102,19 @@ const getCurrenctUser = async (req, res) => {
     console.log(error);
   }
 };
+const findUser = async (req, res) => {
+  try {
+    const userFound = await User.findById(req.params.id);
 
+    if (!userFound)
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+
+    res.status(200).json(userFound);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Une erreur interne est survenu" });
+  }
+};
 export {
   login,
   register,
@@ -111,4 +123,5 @@ export {
   updateByIdUser,
   deleteByIdUser,
   getCurrenctUser,
+  findUser,
 };
