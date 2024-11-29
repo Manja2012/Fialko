@@ -3,29 +3,60 @@ import User from "../models/user.model.js";
 import { env } from "../config.js";
 import bcrypt from "bcrypt";
 
+// const login = async (req, res) => {
+//   try {
+//     const user = await User.findOne({ email: req.body.email });
+//     if (!user) return res.status(404).json("User not found !");
+
+//     const comparePassword = await bcrypt.compare(
+//       req.body.password,
+//       user.password
+//     );
+//     if (!comparePassword) return res.status(400).json("Wrong Credentials ! ");
+
+//     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, env.token, {
+//       expiresIn: "24h",
+//     });
+
+//     const { password, ...other } = user._doc;
+
+//     res
+//       .cookie("access_token", token, { httpOnly: true })
+//       .status(200)
+//       .json(other);
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(404).json("User not found !");
+    if (!user) return res.status(404).json("User not found!");
 
     const comparePassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
-    if (!comparePassword) return res.status(400).json("Wrong Credentials ! ");
+    if (!comparePassword) return res.status(400).json("Wrong Credentials!");
 
     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, env.token, {
       expiresIn: "24h",
     });
 
+    const cookieOptions = {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      // sameSite: "None",
+      secure: true,
+      // domain: env.webAppUrl,
+    };
+
     const { password, ...other } = user._doc;
 
-    res
-      .cookie("access_token", token, { httpOnly: true })
-      .status(200)
-      .json(other);
+    res.cookie("access_token", token, cookieOptions).status(200).json(other);
   } catch (e) {
     console.log(e);
+    res.status(500).json("An error occurred during login.");
   }
 };
 

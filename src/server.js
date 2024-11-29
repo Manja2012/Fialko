@@ -13,7 +13,7 @@ import routeStripe from "./routes/stripe.js";
 import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
-
+export default app;
 // PORT
 const PORT = env.port || 8080;
 
