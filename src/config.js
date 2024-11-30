@@ -5,7 +5,7 @@ dotenv.config();
 export const env = {
   port: process.env.PORT,
   mongoURI: process.env.MONGODB_URL,
-  token: process.env.TOKEN,
+  tokenSecret: process.env.TOKEN_SECRET,
   clientOrigin: process.env.CLIENT_ORIGIN,
   mailPassword: process.env.MAIL_PASSWORD,
   mailUser: process.env.MAIL_USER,

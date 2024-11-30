@@ -8,7 +8,7 @@ export const verifieToken = (req, res, next) => {
 
   if (!token) return next(createError(401, "Acces Denied"));
 
-  jwt.verify(token, env.token, (err, user) => {
+  jwt.verify(token, env.tokenSecret, (err, user) => {
     if (err) {
       return next(
         createError(403, { message: "Token non valide !", error: err.message })
@@ -24,7 +24,7 @@ export const verifyAdminToken = (req, res, next) => {
 
   if (!token) return next(createError(401, "Acces Denied"));
 
-  jwt.verify(token, env.token, (err, user) => {
+  jwt.verify(token, env.tokenSecret, (err, user) => {
     if (err) {
       return next(
         createError(403, { message: "Token non valide !", error: err.message })

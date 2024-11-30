@@ -14,7 +14,7 @@ import bcrypt from "bcrypt";
 //     );
 //     if (!comparePassword) return res.status(400).json("Wrong Credentials ! ");
 
-//     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, env.token, {
+//     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, env.tokenSecret, {
 //       expiresIn: "24h",
 //     });
 
@@ -39,9 +39,13 @@ const login = async (req, res) => {
     );
     if (!comparePassword) return res.status(400).json("Wrong Credentials!");
 
-    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, env.token, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      env.tokenSecret,
+      {
+        expiresIn: "24h",
+      }
+    );
 
     const cookieOptions = {
       httpOnly: true,

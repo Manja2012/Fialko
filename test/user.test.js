@@ -93,7 +93,7 @@ describe("Users Controller", () => {
   //   );
   //   expect(jwt.sign).toHaveBeenCalledWith(
   //     { id: mockUser._id, isAdmin: mockUser.isAdmin },
-  //     process.env.token,
+  //     process.env.tokenSecret,
   //     { expiresIn: "24h" }
   //   );
   //   expect(res.cookie).toHaveBeenCalledWith("access_token", "mockToken", {
@@ -238,5 +238,3 @@ describe("Users Controller", () => {
   //   expect(res.json).toHaveBeenCalledWith({ error: "Utilisateur non trouvé" });
   // });
 });
-
-
