@@ -49,9 +49,10 @@ const login = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      // sameSite: "None",
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "None",
       secure: true,
+      // origin: env.frontOrigin,
       // domain: env.webAppUrl,
     };
 
